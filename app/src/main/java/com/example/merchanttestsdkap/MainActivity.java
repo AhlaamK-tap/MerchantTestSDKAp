@@ -220,7 +220,7 @@ public class MainActivity extends AppCompatActivity implements SessionDelegate {
         if (sdkSession != null) {
             TransactionMode trx_mode = (settingsManager != null) ? settingsManager.getTransactionsMode("key_sdk_transaction_mode") : TransactionMode.PURCHASE;
             // set transaction mode [TransactionMode.PURCHASE - TransactionMode.AUTHORIZE_CAPTURE - TransactionMode.SAVE_CARD - TransactionMode.TOKENIZE_CARD ]
-            sdkSession.setTransactionMode(TransactionMode.SAVE_CARD);    //** Required **
+            sdkSession.setTransactionMode(TransactionMode.PURCHASE);    //** Required **
             // if you are not using tap button then start SDK using the following call
             // sdkSession.start(this);
         }
@@ -278,9 +278,9 @@ public class MainActivity extends AppCompatActivity implements SessionDelegate {
             TransactionMode trx_mode = sdkSession.getTransactionMode();
             if (trx_mode != null) {
 
-                if (TransactionMode.SAVE_CARD == trx_mode || TransactionMode.SAVE_CARD_NO_UI == trx_mode) {
+                if (TransactionMode.SAVE_CARD == trx_mode ) {
                     payButtonView.getPayButton().setText(getString(company.tap.gosellapi.R.string.save_card));
-                } else if (TransactionMode.TOKENIZE_CARD == trx_mode || TransactionMode.TOKENIZE_CARD_NO_UI == trx_mode) {
+                } else if (TransactionMode.TOKENIZE_CARD == trx_mode ) {
                     payButtonView.getPayButton().setText(getString(company.tap.gosellapi.R.string.tokenize));
                 } else {
                     payButtonView.getPayButton().setText(getString(company.tap.gosellapi.R.string.pay));
@@ -512,6 +512,13 @@ public class MainActivity extends AppCompatActivity implements SessionDelegate {
     @Override
     public void userEnabledSaveCardOption(boolean saveCardEnabled) {
         System.out.println("userEnabledSaveCardOption :  " + saveCardEnabled);
+    }
+
+    @Override
+    public void cardTokenizedSuccessfully(@NonNull Token token, boolean saveCardEnabled) {
+        System.out.println("cardTokenizedSuccessfully token :  " + token);
+        System.out.println("cardTokenizedSuccessfully saveCardEnabled :  " + saveCardEnabled);
+
     }
 
 
